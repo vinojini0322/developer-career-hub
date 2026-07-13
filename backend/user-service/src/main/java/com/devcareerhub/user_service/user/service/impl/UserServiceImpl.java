@@ -1,5 +1,6 @@
 package com.devcareerhub.user_service.user.service.impl;
 
+import com.devcareerhub.user_service.common.exception.EmailAlreadyExistsException;
 import com.devcareerhub.user_service.user.dto.CreateUserRequest;
 import com.devcareerhub.user_service.user.entity.User;
 import com.devcareerhub.user_service.user.mapper.UserMapper;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(CreateUserRequest userRequest) {
 
         if (userRepository.existsByEmail(userRequest.email())) {
-            throw new RuntimeException(
+            throw new EmailAlreadyExistsException(
                     "A user already exists with email: " + userRequest.email()
             );
         }
