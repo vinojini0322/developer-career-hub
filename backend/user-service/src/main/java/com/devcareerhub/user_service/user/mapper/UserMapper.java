@@ -1,29 +1,30 @@
 package com.devcareerhub.user_service.user.mapper;
 
 import com.devcareerhub.user_service.user.dto.CreateUserRequest;
+import com.devcareerhub.user_service.user.dto.UpdateUserRequest;
 import com.devcareerhub.user_service.user.dto.UserResponse;
 import com.devcareerhub.user_service.user.entity.User;
-import com.devcareerhub.user_service.user.enums.UserRole;
-import com.devcareerhub.user_service.user.enums.UserStatus;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
+@Mapper(componentModel = "spring")
+public interface UserMapper {
 
-public class UserMapper {
-    public UserMapper() {
-    }
+    @Mapping(target = "status", constant = "ACTIVE")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    User toEntity(CreateUserRequest request);
 
-    public static User toEntity(CreateUserRequest userRequest) {
-        return User.builder()
-                .firstName(userRequest.firstName())
-                .lastName(userRequest.lastName())
-                .email(userRequest.email())
-                .phone(userRequest.phone())
-                .role(UserRole.USER)
-                .status(UserStatus.ACTIVE).build();
-    }
+    UserResponse toResponse(User user);
 
-    public static UserResponse toResponse(User user) {
-        return new UserResponse(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(),
-                user.getRole(), user.getStatus());
-
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    void updateEntity(
+            UpdateUserRequest request,
+            @MappingTarget User user
+    );
 }

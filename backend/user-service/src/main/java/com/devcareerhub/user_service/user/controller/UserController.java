@@ -11,15 +11,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("/api/v1/users")
 @AllArgsConstructor
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest userRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(UserMapper.toResponse(userService.createUser(userRequest)));
+                .body(userMapper.toResponse(userService.createUser(userRequest)));
     }
 }

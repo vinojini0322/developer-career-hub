@@ -5,22 +5,29 @@ import com.devcareerhub.user_service.user.entity.User;
 import com.devcareerhub.user_service.user.mapper.UserMapper;
 import com.devcareerhub.user_service.user.repository.UserRepository;
 import com.devcareerhub.user_service.user.service.UserService;
-import com.sun.jdi.request.DuplicateRequestException;
-import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
     @Override
     @Transactional
     public User createUser(CreateUserRequest userRequest) {
-        if(Boolean.TRUE.equals(userRepository.existsByEmail(userRequest.email()))){
-            throw new DuplicateRequestException("Email already exists");
+
+        if (userRepository.existsByEmail(userRequest.email())) {
+            throw new RuntimeException(
+                    "A user already exists with email: " + userRequest.email()
+            );
         }
-        return userRepository.save(UserMapper.toEntity(userRequest));
+
+        User user = userMapper.toEntity(userRequest);
+
+        return userRepository.save(user);
     }
 }
