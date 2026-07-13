@@ -183,7 +183,8 @@ Example:
 
 All services must return a consistent response format.
 
-```{
+```json id="response1"
+{
   "timestamp": "2026-07-01T10:00:00Z",
   "status": "SUCCESS",
   "message": "Request processed successfully",
@@ -198,7 +199,8 @@ All services must return a consistent response format.
 
 All errors must follow a unified structure:
 
-``` {
+``` json id="error2"
+{
   "timestamp": "2026-07-01T10:01:00Z",
   "status": "ERROR",
   "message": "Validation failed",
