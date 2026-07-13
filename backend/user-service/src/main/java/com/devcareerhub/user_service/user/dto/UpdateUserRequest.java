@@ -1,17 +1,10 @@
 package com.devcareerhub.user_service.user.dto;
 
-import com.devcareerhub.user_service.user.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.UUID;
-
-public record CreateUserRequest(
-
-        @NotNull(message = "User ID is required")
-        UUID id,
+public record UpdateUserRequest(
 
         @NotBlank(message = "First name is required")
         @Size(max = 100, message = "First name must not exceed 100 characters")
@@ -27,9 +20,6 @@ public record CreateUserRequest(
         String email,
 
         @Size(max = 20, message = "Phone must not exceed 20 characters")
-        String phone,
-
-        @NotNull(message = "Role is required")
-        UserRole role
+        String phone
 ) {
 }

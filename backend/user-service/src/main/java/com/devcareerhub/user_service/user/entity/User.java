@@ -3,10 +3,7 @@ package com.devcareerhub.user_service.user.entity;
 import com.devcareerhub.user_service.user.enums.UserRole;
 import com.devcareerhub.user_service.user.enums.UserStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,9 +14,10 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Builder
 public class User {
 
@@ -36,7 +34,7 @@ public class User {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(nullable = false,length = 20)
+    @Column(nullable = false, length = 20)
     private String phone;
 
     @Column(nullable = false)
@@ -48,7 +46,7 @@ public class User {
     private UserStatus status;
 
     @CreatedDate
-    @Column(nullable = false,updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
